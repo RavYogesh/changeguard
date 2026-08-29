@@ -1,0 +1,31 @@
+{
+  "setup_commands": [
+    "corepack enable && pnpm install --frozen-lockfile",
+    "python -m pip install -r backend/requirements.txt"
+  ],
+  "test_commands": [
+    "pnpm test -- --run",
+    "pnpm exec playwright test",
+    "python -m pytest backend/tests -q"
+  ],
+  "test_roots": ["tests", "test", "src", "app", "backend"],
+  "source_roots": ["src", "app", "packages", "backend"],
+  "exclude": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/*.lock",
+    "**/.env*",
+    "**/fixtures/private/**"
+  ],
+  "daily_change_hours": 24,
+  "max_files": 20,
+  "max_file_bytes": 18000,
+  "max_context_bytes": 180000,
+  "max_candidates": 12,
+  "command_timeout_seconds": 900,
+  "validation_command": null,
+  "require_validation": false,
+  "product_context": "A customer-facing web application with a React checkout, Node payment API, and Python identity service. Monetary values use minor units. Authorization must fail closed. Public API and persisted-event shapes are compatibility contracts."
+}
