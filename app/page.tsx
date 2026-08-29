@@ -7,7 +7,7 @@ import { RunScanButton } from './run-scan-button';
 
 export default async function Home() {
   const { summary, repositories: repos, alerts, trend } = await getDashboardSnapshot();
-  return <main className="min-h-screen bg-background text-foreground">
+  return <main className="min-h-screen border-t-4 border-accent bg-background text-foreground">
     <div className="mx-auto grid min-h-screen max-w-[1600px] lg:grid-cols-[228px_1fr]">
       <aside className="hidden border-r border-border/70 bg-sidebar px-4 py-5 lg:flex lg:flex-col">
         <div className="flex items-center gap-3 px-2"><span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground"><ShieldCheck className="size-5" /></span><div><div className="font-semibold">ChangeGuard</div><div className="text-[11px] text-muted-foreground">Continuous test intelligence</div></div></div>
@@ -15,7 +15,7 @@ export default async function Home() {
           <a className="nav-item bg-primary text-primary-foreground" href="#overview"><LayoutDashboard className="size-4" /> Overview</a>
           <a className="nav-item" href="#repositories"><GitFork className="size-4" /> Repositories <span className="ml-auto text-xs">12</span></a>
           <a className="nav-item" href="#corpus"><TestTube2 className="size-4" /> Test corpus</a>
-          <a className="nav-item" href="#alerts"><AlertTriangle className="size-4" /> Alerts <span className="ml-auto size-2 rounded-full bg-amber-500" /></a>
+          <a className="nav-item" href="#alerts"><AlertTriangle className="size-4" /> Alerts <span className="ml-auto size-2 rounded-full bg-accent" /></a>
         </nav>
         <div className="mt-auto rounded-xl border bg-background/70 p-3.5"><div className="flex items-center gap-2 text-xs font-medium"><span className="size-2.5 rounded-full bg-emerald-500" /> Daily runner online</div><p className="mt-2 text-[11px] text-muted-foreground">Next scan at 02:00 UTC</p></div>
       </aside>
@@ -28,7 +28,7 @@ export default async function Home() {
 
           <div className="mt-4 grid gap-4 xl:grid-cols-[1.6fr_1fr]">
             <Card className="border-border/70 shadow-none"><CardHeader><CardTitle>Regression shield</CardTitle><CardDescription>Accepted tests and defects caught over 12 nightly scans.</CardDescription></CardHeader><CardContent><div className="flex h-40 items-end gap-2">{trend.map((v,i)=><div key={i} className="flex h-full flex-1 items-end"><div className="w-full rounded-t bg-primary/15" style={{height:`${v}%`}}><div className="h-1.5 rounded bg-primary" /></div></div>)}</div><div className="mt-3 flex justify-between border-t pt-3 text-[11px] text-muted-foreground"><span>Aug 18</span><span>Today · +143 tests</span></div></CardContent></Card>
-            <Card className="border-0 bg-ink text-white shadow-none"><CardHeader><Sparkles className="mb-2 size-5 text-lime-300" /><CardTitle className="text-white">Last run&apos;s intelligence</CardTitle><CardDescription className="text-white/60">Candidates enter the corpus only after isolated validation.</CardDescription></CardHeader><CardContent className="space-y-3"><Intel value={String(summary.acceptedLastRun)} label="tests accepted" /><Intel value={String(summary.tests)} label="tests in cumulative corpus" /><Intel value={String(summary.repositories)} label="repositories protected" /><Intel value={String(summary.risks)} label="evidence-backed risks" /></CardContent></Card>
+            <Card className="border-0 bg-ink text-white shadow-none"><CardHeader><Sparkles className="mb-2 size-5 text-accent" /><CardTitle className="text-white">Last run&apos;s intelligence</CardTitle><CardDescription className="text-white/60">Candidates enter the corpus only after isolated validation.</CardDescription></CardHeader><CardContent className="space-y-3"><Intel value={String(summary.acceptedLastRun)} label="tests accepted" /><Intel value={String(summary.tests)} label="tests in cumulative corpus" /><Intel value={String(summary.repositories)} label="repositories protected" /><Intel value={String(summary.risks)} label="evidence-backed risks" /></CardContent></Card>
           </div>
 
           <div className="mt-4 grid gap-4 xl:grid-cols-[1.6fr_1fr]">
@@ -41,5 +41,5 @@ export default async function Home() {
   </main>;
 }
 
-function Metric({icon:Icon,label,value,note,warn=false}:{icon:typeof Radar;label:string;value:string;note:string;warn?:boolean}) { return <Card size="sm" className="border-border/70 shadow-none"><CardContent><div className="flex justify-between text-xs text-muted-foreground"><span>{label}</span><Icon className={`size-4 ${warn?'text-amber-600':''}`} /></div><div className="mt-4 font-mono text-2xl font-semibold">{value}</div><div className={`mt-1 text-[11px] ${warn?'text-amber-700':'text-muted-foreground'}`}>{note}</div></CardContent></Card>; }
+function Metric({icon:Icon,label,value,note,warn=false}:{icon:typeof Radar;label:string;value:string;note:string;warn?:boolean}) { return <Card size="sm" className="border-border/70 shadow-none"><CardContent><div className="flex justify-between text-xs text-muted-foreground"><span>{label}</span><Icon className={`size-4 ${warn?'text-destructive':''}`} /></div><div className="mt-4 font-mono text-2xl font-semibold">{value}</div><div className={`mt-1 text-[11px] ${warn?'text-destructive':'text-muted-foreground'}`}>{note}</div></CardContent></Card>; }
 function Intel({value,label}:{value:string;label:string}) { return <div className="flex justify-between border-b border-white/10 pb-2 text-xs text-white/65 last:border-0"><span>{label}</span><b className="font-mono text-white">{value}</b></div>; }
